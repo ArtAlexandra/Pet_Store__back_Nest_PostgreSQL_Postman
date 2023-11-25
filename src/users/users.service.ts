@@ -19,6 +19,10 @@ export class UsersService {
         return this.userModel.findOne({ ...filter });
       }
     
+      findAll(): Promise<User[]> {
+        return this.userModel.findAll();
+      }
+    
 
     async create(
         createUserDto: CreateUserDto
@@ -49,6 +53,7 @@ export class UsersService {
         user.password = hashedPassword;
         user.phone = createUserDto.phone;
         user.balance = createUserDto.balance;
+        user.admin = createUserDto.admin;
 
         return user.save();
         

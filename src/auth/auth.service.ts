@@ -8,7 +8,7 @@ export class AuthService {
     constructor(private readonly usersService: UsersService){}
 
     async validateUser(email:string, password:string ){
-    console.log("TYT5");
+ 
 
         const user = await this.usersService.findOne({ where: { email } });
         if(!user){
@@ -28,7 +28,8 @@ export class AuthService {
                 email:user.email,
                 password: user.password,
                 phone: user.phone,
-                balance: user.balance
+                balance: user.balance,
+                admin: user.admin
             };
         }
         return null;

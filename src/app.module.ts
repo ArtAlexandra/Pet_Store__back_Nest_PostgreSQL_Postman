@@ -5,6 +5,9 @@ import { User } from './users/users.model';
 
 import { ConfigModule } from "@nestjs/config";
 import { AuthModule } from './auth/auth.module';
+import { GoodsModule } from './goods/goods.module';
+import { KindsModule } from './kinds/kinds.module';
+import { AnimalsModule } from './animals/animals.module';
 
 
 @Module({
@@ -31,6 +34,12 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     
     AuthModule,
+    
+    GoodsModule,
+    
+    KindsModule,
+    
+    AnimalsModule,
   ],
 
 })

@@ -23,5 +23,8 @@ export class User extends Model{
     @Column({type: DataType.INTEGER, defaultValue: 0})
     balance:number;
 
+    @Column({type: DataType.BOOLEAN, defaultValue: false})
+    admin:boolean;
+
 
 }
