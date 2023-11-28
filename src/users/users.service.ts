@@ -14,7 +14,7 @@ export class UsersService {
 
 
     findOne(filter: {
-        where: { id?: string; name?: string; email?: string };
+        where: { id?: number|string; name?: string; email?: string };
       }): Promise<User> {
         return this.userModel.findOne({ ...filter });
       }
@@ -58,5 +58,28 @@ export class UsersService {
         return user.save();
         
 
+    }
+
+    async addBalance(id:number,  createUserDto: CreateUserDto):Promise<string>{
+        const user = await this.findOne({where:{id}});
+        if(!user){
+            return "Такой пользователь не найден";
+        }
+        if(createUserDto.balance<=0){
+            return "Ошибка! Пополнить баланс можно только на положительную сумму!";
+        }
+        const balance:number =  user.balance + createUserDto.balance;
+        await this.userModel.update({balance}, {where: {id}});
+      
+        return `Баланс пополнен на ${createUserDto.balance} рублей. Всего на счету ${balance} рублей`;
+    }
+
+
+    async gazeUser(id:number):Promise<CreateUserDto|string>{
+        const user = await this.findOne({where:{id}});
+        if(!user){
+            return "Такой пользователь не найден";
+        }
+        return user;
     }
 }

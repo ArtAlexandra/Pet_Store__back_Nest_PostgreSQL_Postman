@@ -1,4 +1,4 @@
-import { Controller, Header, HttpCode, HttpStatus, Body, Post, UseGuards, Request,Get } from '@nestjs/common';
+import { Controller, Header, HttpCode, HttpStatus, Body, Post, UseGuards, Request,Get, Param } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LocalAuthGuard } from 'src/auth/local.auth.guard';
@@ -49,5 +49,15 @@ export class UsersController {
   logout(@Request() req) {
     req.session.destroy();
     return {msg: "session has ended"} ;
+  }
+
+  @Post('/addbalance/:id')
+  addBalance(@Param('id') id:number, @Body() createUserDto: CreateUserDto ){
+    return this.usersService.addBalance(id, createUserDto);    
+  }
+
+  @Get('/gazeuser/:id')
+  gazeUser(@Param('id') id:number){
+    return this.usersService.gazeUser(id);
   }
 }

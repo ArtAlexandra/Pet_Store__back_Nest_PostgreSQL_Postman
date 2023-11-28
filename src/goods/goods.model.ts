@@ -1,5 +1,7 @@
 
-import { Table,Model, Column, DataType } from "sequelize-typescript";
+import { Table,Model, Column, DataType, HasMany,BelongsTo, ForeignKey } from "sequelize-typescript";
+import { Animal } from "src/animals/animals.model";
+import { Kind } from "src/kinds/kinds.model";
 
 
 @Table
@@ -15,8 +17,12 @@ export class Goods extends Model{
     @Column({type: DataType.INTEGER, allowNull: false})
     price:number;
 
+    @ForeignKey(()=>Animal)
     @Column({type: DataType.INTEGER, allowNull: false})
-    animal:number;
+    animalId:number;
+
+    @BelongsTo(()=>Animal)
+    animal: Animal;
 
     @Column({type: DataType.INTEGER, allowNull: false})
     quantity:number;
@@ -27,10 +33,14 @@ export class Goods extends Model{
     @Column({type: DataType.STRING, allowNull: false})
     mark:string;
 
+    @ForeignKey(()=>Kind)
     @Column({type: DataType.INTEGER, allowNull: false})
-    kind:number;
+    kindId:number;
+
+    @BelongsTo(()=>Kind)
+    kind: Kind;
 
 
     @Column({type: DataType.BLOB})
     image:Blob;
-}
+};

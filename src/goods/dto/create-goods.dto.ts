@@ -20,7 +20,7 @@ export class CreateGoodsDto{
 
     @ApiProperty({example: 2})
     @IsNotEmpty()
-    readonly animal:number;
+    readonly animalId:number;
 
     @ApiProperty({example: 100})
     @IsNotEmpty()
@@ -39,7 +39,7 @@ export class CreateGoodsDto{
 
     @ApiProperty({example: 2})
     @IsNotEmpty()
-    readonly kind:number;
+    readonly kindId:number;
 
     @ApiProperty({example: "image"})
     @IsNotEmpty()

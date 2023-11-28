@@ -32,15 +32,14 @@ export class GoodsService {
       }
       async sortKind(kind:number):Promise<Goods[]>{
         const goods =  this.goodsModel.findAll();
-       const goodsSort = (await goods).filter((g)=>g.kind == kind);
+       const goodsSort = (await goods).filter((g)=>g.kindId == kind);
        return goodsSort;
       }
       async sortAnimal(animal:number):Promise<Goods[]>{
         const goods =  this.goodsModel.findAll();
-       const goodsSort = (await goods).filter((g)=>g.animal == animal);
+       const goodsSort = (await goods).filter((g)=>g.animalId == animal);
        return goodsSort;
       }
-
 
 
 
@@ -68,9 +67,9 @@ export class GoodsService {
         goods.title = createGoodsDto.title;
         goods.price = createGoodsDto.price;
         goods.quantity = createGoodsDto.quantity;
-        goods.animal = createGoodsDto.animal;
+        goods.animalId = createGoodsDto.animalId;
         goods.description = createGoodsDto.description;
-        goods.kind = createGoodsDto.kind;
+        goods.kindId = createGoodsDto.kindId;
         goods.mark = createGoodsDto.mark;
         goods.image = createGoodsDto.image;
 
@@ -99,9 +98,9 @@ export class GoodsService {
         goods.title = createGoodsDto.title;
         goods.price = createGoodsDto.price;
         goods.quantity = createGoodsDto.quantity;
-        goods.animal = createGoodsDto.animal;
+        goods.animalId = createGoodsDto.animalId;
         goods.description = createGoodsDto.description;
-        goods.kind = createGoodsDto.kind;
+        goods.kindId = createGoodsDto.kindId;
         goods.mark = createGoodsDto.mark;
         goods.image =image;
 
@@ -135,6 +134,21 @@ export class GoodsService {
         
     }
 
+    async addQuantity(createGoodsDto: CreateGoodsDto): Promise<string>{
+        const goods = await this.goodsModel.findOne({where: {title: createGoodsDto.title}});
+        if(!goods){
+            return 'Такой товар не найден';
+        }
+
+        if(createGoodsDto.quantity<=0){
+            return 'Ошибка! Можно добавить только положительное число товаров!';
+        }
+        const quantity = goods.quantity + createGoodsDto.quantity;
+        await this.goodsModel.update({quantity}, {where: {title: createGoodsDto.title}});
+        
+        return `Товар успено поплнен на ${createGoodsDto.quantity} штук`;
+      
+    }
 
 
 }

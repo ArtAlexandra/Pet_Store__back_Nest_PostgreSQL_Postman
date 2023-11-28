@@ -8,6 +8,8 @@ import { AuthModule } from './auth/auth.module';
 import { GoodsModule } from './goods/goods.module';
 import { KindsModule } from './kinds/kinds.module';
 import { AnimalsModule } from './animals/animals.module';
+import { BasketsModule } from './baskets/baskets.module';
+import { ShopsModule } from './shops/shops.module';
 
 
 @Module({
@@ -40,6 +42,11 @@ import { AnimalsModule } from './animals/animals.module';
     KindsModule,
     
     AnimalsModule,
+    
+    BasketsModule,
+    
+    ShopsModule,
+    
   ],
 
 })
