@@ -43,5 +43,5 @@ export class CreateGoodsDto{
 
     @ApiProperty({example: "image"})
     @IsNotEmpty()
-    readonly image:Blob;
+    readonly image:string;
 }

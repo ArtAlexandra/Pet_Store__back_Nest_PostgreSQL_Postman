@@ -10,11 +10,17 @@ import { KindsModule } from './kinds/kinds.module';
 import { AnimalsModule } from './animals/animals.module';
 import { BasketsModule } from './baskets/baskets.module';
 import { ShopsModule } from './shops/shops.module';
-
+import { ServeStaticModule} from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   
   imports: [
+    /*
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, './', 'front'),
+    }),
+    ConfigModule.forRoot({isGlobal: true}),*/
     ConfigModule.forRoot({
       envFilePath: `.env`
     }),

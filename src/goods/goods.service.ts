@@ -4,6 +4,8 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Goods } from './goods.model';
 import { CreateGoodsDto } from './dto/create-goods.dto';
 
+import { switchMap, map, catchError} from 'rxjs/operators';
+import { Observable, from, throwError } from 'rxjs';
 
 @Injectable()
 export class GoodsService {
@@ -81,10 +83,10 @@ export class GoodsService {
 
     
     async createImage(
-        createGoodsDto: CreateGoodsDto,  image: Blob
+        createGoodsDto: CreateGoodsDto,  image: string
     ): Promise<Goods| {warningMessage:string}>{
         
-        
+        console.log(image);
         const existingGoodsByTitle = await this.findOne({
             where: { title: createGoodsDto.title}
         });
@@ -102,7 +104,7 @@ export class GoodsService {
         goods.description = createGoodsDto.description;
         goods.kindId = createGoodsDto.kindId;
         goods.mark = createGoodsDto.mark;
-        goods.image =image;
+        goods.image = image;
 
         return goods.save();
 
@@ -111,26 +113,20 @@ export class GoodsService {
     }
 
     async addImage(
-        id_g:string,
-       image: Blob
-    ): Promise<Goods| {warningMessage:string}>{
-       
-        
-        const id_g2: number = Number(id_g);
-        
-        const goodsOld = await this.findOne({
-            where: {id_g : id_g2}
-        });
-       
-        if(!goodsOld){
-            return {
-                warningMessage : 'Товар с таким названием не существует'
-            };
-            
+        id_g:number,
+        createGoodsDto: CreateGoodsDto
+    ): Promise<Goods|string>{
+        const goods = await this.goodsModel.findOne({where: {title: createGoodsDto.title}});
+        if(!goods){
+            return 'Такой товар не найден';
         }
-    
-       await this.goodsModel.update({image}, {where: {id_g}});
-        return this.findOne({where: {id_g: id_g2}})
+  
+       const image = createGoodsDto.image;
+       await  this.goodsModel.update({image}, {where: {title: createGoodsDto.title}});
+       return goods;
+      //  return from(this.goodsModel.update({goods}, {where: {title: goods.title}} ))//.pipe(
+          //  switchMap(() => this.findOne({where: {id_g: id_g2}}))
+        
         
     }
 

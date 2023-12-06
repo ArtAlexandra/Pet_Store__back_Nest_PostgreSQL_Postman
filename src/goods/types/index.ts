@@ -101,7 +101,7 @@ export class CreateGoodsWithImageRequest{
     kindId:number;
 
     @ApiProperty({example: "Картинка"})
-    image:Blob;
+    image:string;
 }
 
 

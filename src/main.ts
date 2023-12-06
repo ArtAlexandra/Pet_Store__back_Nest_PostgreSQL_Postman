@@ -3,7 +3,8 @@ import { AppModule } from './app.module';
 import * as session from 'express-session'
 import * as passport from 'passport'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-
+import { join } from 'path';
+import  express  from 'express';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule,{cors:true});
   app.use(
@@ -25,6 +26,7 @@ async function bootstrap() {
 
   const documentation = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("swagger", app, documentation);
+  //app.use('/public', express.static(join(__dirname, '..', 'public')));
   await app.listen(3001);
 }
 bootstrap();

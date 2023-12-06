@@ -32,15 +32,21 @@ export class Goods extends Model{
 
     @Column({type: DataType.STRING, allowNull: false})
     mark:string;
+    @Column({type: DataType.STRING, allowNull:true})
+    image:string;
 
     @ForeignKey(()=>Kind)
     @Column({type: DataType.INTEGER, allowNull: false})
     kindId:number;
 
+
     @BelongsTo(()=>Kind)
     kind: Kind;
 
+/*
+    @Column({type: 'bytea'})
+    image:Uint8Array;
+    */
 
-    @Column({type: DataType.BLOB})
-    image:Blob;
+   
 };
